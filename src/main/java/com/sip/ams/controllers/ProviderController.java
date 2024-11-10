@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
@@ -22,36 +23,65 @@ public class ProviderController {
 	private static final Logger logger = LoggerFactory.getLogger(ProviderController.class);
 
 	private final ProviderRepository providerRepository;
-	
+
 	public ProviderController(ProviderRepository providerRepository) {
 		this.providerRepository = providerRepository;
 	}
-	
+
 	@GetMapping("list")
 	public String listProviders(Model model) {
-		List<Provider> lp = (List<Provider>)providerRepository.findAll();
+		List<Provider> lp = (List<Provider>) providerRepository.findAll();
 		model.addAttribute("providers", lp.size() == 0 ? null : lp);
 		logger.info(String.valueOf(providerRepository.findAll()));
 		return "provider/listProviders";
 	}
-	
+
 	@GetMapping("add")
 	public String addProviderForm(Model model) {
-		
+
 		Provider provider = new Provider();
 		model.addAttribute("provider", provider);
 		return "provider/addProvider";
 	}
-	
+
 	@PostMapping("add")
 	public String saveProvider(@Valid Provider provider, BindingResult result) {
-		
+
 		logger.info(provider.getAdress());
-		if(result.hasErrors()) {
-			
+		if (result.hasErrors()) {
+
 			return "provider/addProvider";
 		}
 		providerRepository.save(provider);
 		return "redirect:list";
 	}
+
+	@GetMapping("delete/{id}")
+	public String deleteProvider(@PathVariable long id, Model model) {
+
+		Provider provider = providerRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + id));
+		providerRepository.delete(provider);
+		return "redirect:../list";
+	}
+	
+	@GetMapping("edit/{id}")
+	public String editProvider(@PathVariable long id, Model model) {
+		Provider provider = providerRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + id));
+		model.addAttribute("provider", provider);
+		
+		return "provider/updateProvider";
+	}
+	
+	@PostMapping("update")
+	public String updateProvider(@Valid Provider provider, BindingResult result) {
+		
+		if(result.hasErrors()) {
+			return "provider/updateProvider";
+		}
+		providerRepository.save(provider);
+		return "redirect:list";
+	}
+
 }
