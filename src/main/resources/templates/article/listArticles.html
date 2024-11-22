@@ -20,7 +20,7 @@
 			<div class="card-body">
 				<div th:switch="${article}" class="container my-2">
 					<p class="py-2">
-						<a th:href="@{'article/add'}" class="btn btn-primary">Add
+						<a th:href="@{'add'}" class="btn btn-primary">Add
 							Article</a>
 					</p>
 					<div class="col-md-10">
@@ -41,12 +41,12 @@
 										<td th:text="${article.label}"></td>
 										<td th:text="${article.price}"></td>
 										<td th:text="${article.provider.name}"></td>
-										<td><a th:href="@{article/edit/{id}(id = ${article.id})"
+										<td><a th:href="@{edit/{id}(id = ${article.id})}"
 											class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a>
 										</td>
 										<td><a
-											th:href="@{article/delete/{id}(id = ${article.id})"
-											class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+											th:href="@{delete/{id}(id = ${article.id})}"
+											class="btn btn-danger"><i class="fas fa-user-times ml-2"></i></a></td>
 									</tr>
 								</tbody>
 							</table>

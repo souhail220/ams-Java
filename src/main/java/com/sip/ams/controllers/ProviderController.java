@@ -32,7 +32,7 @@ public class ProviderController {
 	public String listProviders(Model model) {
 		List<Provider> lp = (List<Provider>) providerRepository.findAll();
 		model.addAttribute("providers", lp.size() == 0 ? null : lp);
-		logger.info(String.valueOf(providerRepository.findAll()));
+
 		return "provider/listProviders";
 	}
 
@@ -47,9 +47,8 @@ public class ProviderController {
 	@PostMapping("add")
 	public String saveProvider(@Valid Provider provider, BindingResult result) {
 
-		logger.info(provider.getAdress());
 		if (result.hasErrors()) {
-
+			logger.info("Hamma");
 			return "provider/addProvider";
 		}
 		providerRepository.save(provider);
