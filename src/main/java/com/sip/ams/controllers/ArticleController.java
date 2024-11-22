@@ -1,5 +1,9 @@
 package com.sip.ams.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sip.ams.entities.Article;
 import com.sip.ams.entities.Provider;
@@ -21,6 +26,9 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/article/")
 public class ArticleController {
+	
+	public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
+	
 	private final ArticleRepository articleRepository;
 	private final ProviderRepository providerRepository;
 	
@@ -46,14 +54,46 @@ public class ArticleController {
 	}
 	
 	@PostMapping("add")
-	public String saveArticle(@Valid Article article, BindingResult result, @RequestParam(name="providerId", required=true) Long p) {
+	public String saveArticle(
+			@Valid Article article, 
+			BindingResult result,
+			@RequestParam(name="providerId", required=true) Long p,
+			@RequestParam(required=false) MultipartFile [] files
+			) 
+	{
 		if(result.hasErrors()) {
 			return "redirect:../add";
 		}
 		Provider provider = providerRepository.findById(p).orElseThrow(()-> new IllegalArgumentException("Invalid article Id:" + p));
 		article.setProvider(provider);
+		
+		// picture upload
+		
+		StringBuilder fileName = new StringBuilder();
+		MultipartFile file = files[0];
+		Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+		
+		fileName.append(file.getOriginalFilename());
+		try {
+			Files.write(fileNameAndPath, file.getBytes());
+		}catch(IOException exception) {
+			exception.printStackTrace();
+		}
+		article.setPicture(fileName.toString());
+		
 		articleRepository.save(article);
 		return "redirect:list";
+	}
+	
+	@GetMapping("show/{id}")
+	public String showArticle(
+			@PathVariable Long id,
+			Model model
+			) {
+		Article article = articleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Article Id: " + id));
+		model.addAttribute("article", article);
+		
+		return "article/showArticle";
 	}
 	
 	@GetMapping("edit/{id}")

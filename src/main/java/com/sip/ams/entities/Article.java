@@ -27,6 +27,17 @@ public class Article {
 	@Column(name = "price")
 	private float price;
 	
+	@Column(name ="picture")
+	private String picture;
+	
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "provider_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -34,9 +45,10 @@ public class Article {
 	
 	public Article() {}
 
-	public Article(String label, float price) {
+	public Article(String label, float price, String picture) {
 		this.label = label;
 		this.price = price;
+		this.picture = picture;
 	}
 
 	public Long getId() {
