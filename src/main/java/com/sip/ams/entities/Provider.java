@@ -28,12 +28,24 @@ public class Provider {
 	@Column(name = "email")
 	private String email;
 	
+	@Column(name ="logo")
+	private String logo;
+	
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
 	public Provider() {}
 	
-	public Provider(String name, String adress, String email) {
+	public Provider(String name, String adress, String email, String logo) {
 		this.name = name;
 		this.adress = adress;
 		this.email = email;
+		this.logo = logo;
 	}
 	
 	public void setId(long id) {

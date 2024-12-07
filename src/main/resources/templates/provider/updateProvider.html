@@ -21,7 +21,7 @@
 			<div class="card-body">
 				<div class="col-md-8">
 					<form action="#" th:action="@{/provider/update}"
-						th:object="${provider}" method="post">
+						th:object="${provider}" method="post" enctype="multipart/form-data">
 						<input type="hidden" th:field="*{id}" />
 						<div class="row">
 							<div class="form-group col-md-6">
@@ -44,6 +44,10 @@
 									id="address" placeholder="address"> <span
 									th:if="${#fields.hasErrors('adress')}" th:errors="adress"
 									class="text-danger"></span>
+							</div>
+							<div class="form-group col-md-8">
+								<label for="logo" class="col-form-label">Logo</label> <input
+									class="form-control" type="file" id="logo" name="files" multiple>
 							</div>
 							<div class="form-group col-md-8">
 								<input type="submit" class="btn btn-primary"

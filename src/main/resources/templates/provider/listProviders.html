@@ -40,6 +40,9 @@
 										<td th:text="${provider.name}"></td>
 										<td th:text="${provider.email}"></td>
 										<td th:text="${provider.adress}"></td>
+										<td><a th:href="@{show/{id}(id = ${provider.id})}"
+											class="btn btn-primary"><i class="fas fa-user-show ml-2"></i>Show Details</a>
+										</td>
 										<td><a
 											th:href="@{/provider/edit/{id}(id=${provider.id})}"
 											class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>Add Provider</title>
@@ -14,7 +13,6 @@
 	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
 	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
 	crossorigin="anonymous">
-
 </head>
 <body>
 	<div class="container my-5">
@@ -22,30 +20,39 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="col-md-10">
-					<form action="#" th:action="@{/provider/add}" th:object="${provider}" method="post">
+					<form action="#" th:action="@{/provider/add}"
+						th:object="${provider}" method="post"
+						enctype="multipart/form-data">
 						<div class="row">
 							<div class="form-group col-md-8">
-								<label for="name" class="col-form-label">Name</label> 
-								<input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Enter your Name" required> 
-								<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+								<label for="name" class="col-form-label">Name</label> <input
+									type="text" th:field="*{name}" class="form-control" id="name"
+									placeholder="Enter your Name" required> <span
+									th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+									class="text-danger"></span>
 							</div>
 							<div class="form-group col-md-8">
 								<label for="email" class="col-form-label">Email</label> <input
 									type="text" th:field="*{email}" class="form-control" id="email"
-									placeholder="Enter your Email" required> 
-								<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+									placeholder="Enter your Email" required> <span
+									th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+									class="text-danger"></span>
 							</div>
 							<div class="form-group col-md-8">
 								<label for="address" class="col-form-label">Address</label> <input
 									type="text" th:field="*{adress}" class="form-control"
 									id="address" placeholder="Enter your address" required>
-								<span th:if="${#fields.hasErrors('adress')}" th:errors="*{adress}" class="text-danger"></span>
+								<span th:if="${#fields.hasErrors('adress')}"
+									th:errors="*{adress}" class="text-danger"></span>
+							</div>
+							<div class="form-group col-md-8">
+								<label for="logo" class="col-form-label">Logo</label> <input
+									class="form-control" type="file" id="logo" name="files" multiple>
 							</div>
 							<div class="col-md-6">
 								<input type="submit" class="btn btn-primary"
 									value="Add Provider">
 							</div>
-							<div class="form-group col-md-8"></div>
 						</div>
 					</form>
 				</div>
@@ -53,5 +60,4 @@
 		</div>
 	</div>
 </body>
-
 </html>

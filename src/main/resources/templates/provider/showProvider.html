@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+<title>Articles List</title>
+</head>
+<body>
+	<div class="container my-5">
+		<h3 align="center">Article details</h3>
+		<div class="card">
+			<div class="card-body">
+				<div class="col-md-8">
+					<form action="#">
+						<div class="form-group col-md-8">
+							<a th:href="@{/provider/list}" class="btn btn-primary"> <i
+								class="fas fa-arrow-left"></i> return to Providers list
+							</a>
+						</div>
+						<div class="row">
+
+							<div class="form-group col-md-4">
+								<label for="label" class="col-form-label">ID</label>
+								<p th:text="${provider.id}">Id</p>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="label" class="col-form-label">name</label>
+								<p th:text="${provider.name}">name</p>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="label" class="col-form-label">Email</label>
+								<p th:text="${provider.email}">Email</p>
+							</div>
+
+							<div class="form-group col-md-12">
+								<label for="label" class="col-form-label">Picture</label> <img
+									alt="Image" th:src="@{'/uploads/'+ ${provider.logo}}"
+									width="250" height="250" />
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -21,7 +21,7 @@
 				<div class="col-md-8">
 					<form action="#"
 						th:action="@{/article/edit/{id}(id = ${article.id})}"
-						th:object="${article}" method="post">
+						th:object="${article}" method="post" enctype="multipart/form-data">
 						<div class="form-group col-md-8">
 							<a th:href="@{/article/list}" class="btn btn-primary"> <i
 								class="fas fa-arrow-left"></i> return to Article list
@@ -44,7 +44,7 @@
 							</div>
 							<div class="form-group col-md-8">
 								<label for="photo" class="col-form-label">Picture</label> <input
-									class="form-control" type="file" th:field="*{picture}"
+									class="form-control" type="file"
 									id="photo" name="files" multiple>
 
 							</div>
