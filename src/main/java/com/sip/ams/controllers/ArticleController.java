@@ -140,6 +140,16 @@ public class ArticleController {
 
 		Article article = articleRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid article Id:" + id));
+		String fileName = article.getPicture();
+		Path fileNameAndPath = Paths.get(uploadDirectory, fileName);
+		logger.info("file path: " + fileNameAndPath);
+		try {
+			Files.delete(fileNameAndPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.info("deleting error: " + e.getMessage());
+			e.printStackTrace();
+		}
 		articleRepository.delete(article);
 		return "redirect:../list";
 	}

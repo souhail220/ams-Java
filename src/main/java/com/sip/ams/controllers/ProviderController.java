@@ -94,6 +94,18 @@ public class ProviderController {
 
 		Provider provider = providerRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + id));
+		
+		// delete logo part
+		String fileName = provider.getLogo();
+		Path fileNameAndPath = Paths.get(ArticleController.uploadDirectory, fileName);
+		try {
+			Files.delete(fileNameAndPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.info("deleting error: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
 		providerRepository.delete(provider);
 		return "redirect:../list";
 	}
