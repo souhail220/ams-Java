@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 @Entity
-@Table(name = "user")
 public class User {
 
 	@Id

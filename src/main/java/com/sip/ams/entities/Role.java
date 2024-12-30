@@ -3,7 +3,6 @@ package com.sip.ams.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "role")
 public class Role {
 
 	@Id
@@ -13,6 +12,14 @@ public class Role {
 	
 	@Column(name = "role")
 	private String role;
+	
+	public Role(String role) {
+		this.role = role;
+	}
+
+	public Role() {
+
+	}
 
 	public int getId() {
 		return id;
