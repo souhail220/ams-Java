@@ -32,10 +32,8 @@ public class HomeController {
 	public String listCandidats(Model m) {
 		
 		String libelleFormation ="Spring Boot & Angular";
-		String formateur = "Mohamed Amine Mezghich";
 		
 		m.addAttribute("lf", libelleFormation);
-		m.addAttribute("coach", formateur);
 		m.addAttribute("tab",lc);
 		return "home/candidate";
 	}
