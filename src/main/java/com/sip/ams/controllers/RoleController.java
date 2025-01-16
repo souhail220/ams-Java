@@ -30,6 +30,7 @@ public class RoleController {
 		List<Role> listRoles = roleRepository.findAll();
 		
 		int nbrRole = listRoles.size();
+		System.out.println("nbrRole: " + nbrRole);
 		if(nbrRole == 0) {
 			listRoles = null;
 		}

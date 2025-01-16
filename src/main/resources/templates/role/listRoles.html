@@ -18,14 +18,14 @@
 		<div class="card">
 			<div class="card-body">
 				<h1 class="text-primary text-center">Roles List</h1>
-				<div th:switch="${providers}" class="container my-5">
+				<div th:switch="${roles}" class="container my-5">
 					<a th:href="@{'/roles/add'}" class="my-5 btn btn-primary"><i
 						class="fas fa-user-plus ml-2"> Add Role</i></a>
 					<div class="col-md-10">
 						<h2 th:case="null">No Roles yet!</h2>
 						<div th:case="*">
 							<h2>
-								Nombre total de role= <span th:text="${nbr}"></span>
+								Nombre total de role: <span th:text="${nbr}"></span>
 							</h2>
 							<table class="table table-stripedable-responsive-md">
 								<thead>
@@ -35,7 +35,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="role : ${role}">
+									<tr th:each="role : ${roles}">
 										<td th:text="${role.id}"></td>
 										<td th:text="${role.role}"></td>
 									</tr>
