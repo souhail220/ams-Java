@@ -45,7 +45,7 @@ public class ProviderController {
 		try {
 			Files.write(fileNameAndPath, file.getBytes());
 		} catch (IOException exception) {
-			exception.printStackTrace();
+			logger.error("An error occurred while writing the file", exception);
 			return "";
 		}
 		return fileName.toString();
@@ -54,7 +54,7 @@ public class ProviderController {
 	@GetMapping("list")
 	public String listProviders(Model model) {
 		List<Provider> lp = (List<Provider>) providerRepository.findAll();
-		model.addAttribute("providers", lp.size() == 0 ? null : lp);
+		model.addAttribute("providers", lp.isEmpty() ? null : lp);
 
 		return "provider/listProviders";
 	}
@@ -71,7 +71,6 @@ public class ProviderController {
 	public String saveProvider(@Valid Provider provider, BindingResult result,
 			@RequestParam(required = false) MultipartFile[] files) {
 
-		logger.info("Validation error count: " + result.getErrorCount());
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach(error -> logger.info(error.toString()));
 			return "provider/addProvider";
@@ -80,7 +79,7 @@ public class ProviderController {
 		// picture upload
 		String fileName = uploadImage(files);
 		if (!fileName.isEmpty()) {
-			provider.setLogo(fileName.toString());
+			provider.setLogo(fileName);
 		}
 
 		providerRepository.save(provider);
@@ -90,7 +89,7 @@ public class ProviderController {
 	}
 
 	@GetMapping("delete/{id}")
-	public String deleteProvider(@PathVariable long id, Model model) {
+	public String deleteProvider(@PathVariable long id) {
 
 		Provider provider = providerRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + id));
@@ -102,8 +101,8 @@ public class ProviderController {
 			Files.delete(fileNameAndPath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			logger.info("deleting error: " + e.getMessage());
-			e.printStackTrace();
+            logger.info("deleting error: {}", e.getMessage());
+			logger.error("An error occurred while writing the file", e);
 		}
 		
 		providerRepository.delete(provider);
@@ -121,7 +120,7 @@ public class ProviderController {
 
 	@PostMapping("update")
 	public String updateProvider(@Valid Provider provider, BindingResult result, @RequestParam(required = false) MultipartFile[] files) {
-		logger.info("Validation error count: " + result.getErrorCount());
+        logger.info("Validation error count: {}", result.getErrorCount());
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach(error -> logger.info(error.toString()));
 			return "provider/updateProvider";
@@ -130,7 +129,7 @@ public class ProviderController {
 		// picture upload
 		String fileName = uploadImage(files);
 		if (!fileName.isEmpty()) {
-			provider.setLogo(fileName.toString());
+			provider.setLogo(fileName);
 		}
 
 		providerRepository.save(provider);

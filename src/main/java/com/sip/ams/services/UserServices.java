@@ -39,6 +39,8 @@ public class UserServices {
 
         Role role = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<Role>(Collections.singletonList(role)));
+
+        userRepository.save(user);
     }
 
 }
